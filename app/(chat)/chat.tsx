@@ -37,36 +37,65 @@ export default function () {
     const [message, setMessage] = useState<string>("");
     const [isloading, setLoading] = useState<boolean>(true);
     const [mySocketId, setMySocketId] = useState<string>();
+    const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
     useEffect(() => {
-        connectSocket(user).then((socket) => {
-            setSocket(socket);
-            setLoading(false);
-        }).catch(error => console.error(error));
+        if (!user) return;
+
+        const setupSocket = async () => {
+            try {
+                const newSocket = await connectSocket(user);
+                if (newSocket) {
+                    setSocket(newSocket);
+                    console.log('Socket conectado, enviando join...');
+                    newSocket.emit('join', { username: user });
+                }
+            } catch (error) {
+                console.error('Error al conectar socket:', error);
+            }
+        };
+
+        setupSocket();
+
         return () => {
             if(socket) {
-                socket?.disconnect();
+                socket.disconnect();
             }
         }
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         if (!socket) return;
-        socket?.on("connect", () => {
+
+        socket.on("connect", () => {
+            console.log('Socket conectado, enviando join...');
             setMySocketId(socket.id);
-        })
-        socket?.on("message", (message: ChatMessage) => {
+            socket.emit('join', { username: user });
+        });
+
+        socket.on("users:update", () => {
+            console.log('Usuario registrado correctamente');
+            setIsRegistered(true);
+            setLoading(false);
+        });
+
+        socket.on("message", (message: ChatMessage) => {
             setMessages((messages) => [...messages, message]);
         });
+
         return () => {
-            socket?.off("message");
+            socket.off("message");
+            socket.off("users:update");
+            socket.off("connect");
         }
     }, [socket]);
 
     const sendMessage = () => {
-        if(message.trim()) {
+        if(message.trim() && isRegistered) {
             socket?.emit("message", message);
             setMessage("");
+        } else if (!isRegistered) {
+            console.log('Usuario no registrado aún, no se puede enviar mensaje');
         }
     };
 
@@ -129,5 +158,5 @@ const styles = StyleSheet.create({
         borderRadius: 5, 
         alignSelf: "center",
         fontWeight: "bold"
-    } as ViewStyle
+    } as ViewStyle
 });
