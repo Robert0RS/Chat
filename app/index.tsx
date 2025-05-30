@@ -17,7 +17,7 @@ export default () => {
     return (
         <SafeAreaView style={style.container}>
             <Stack.Screen options={{ headerShown: false }} />
-            <Text style={style.title}>Bienvenido al chat</Text>
+            <Text style={style.title}>Bienvenido al Chat</Text>
 
             <TextInput
                 style={style.input}
@@ -40,6 +40,8 @@ export default () => {
                     <Text style={style.link}>Configuración</Text>
                 </TouchableOpacity>
             </Link>
+            
+            
         </SafeAreaView>
     );
 };

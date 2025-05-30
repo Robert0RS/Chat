@@ -117,7 +117,7 @@ export default function () {
                     style={{flex: 1, borderWidth: 1, borderColor: "green"}}
                     value={message}
                     onChangeText={setMessage}
-                    placeholder="Escribe un mensaje pues"
+                    placeholder="Escribe aqui tu mensaje..."
                 />
                 <Button title="Mandar" onPress={sendMessage} />
             </View>
@@ -130,33 +130,60 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         fontSize: 16, 
         color: "white", 
-        backgroundColor: "#00B67E",
+        backgroundColor: "#2196F3",
         paddingHorizontal: 10, 
         paddingVertical: 5,
-        borderRadius: 5, 
+        borderRadius: 15,
         alignSelf: "flex-end",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        maxWidth: '80%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 2
     } as ViewStyle,
     tumensaje: {
         marginVertical: 5,
         fontSize: 16, 
         color: "white", 
-        backgroundColor: "#572364",
+        backgroundColor: "#4CAF50",
         paddingHorizontal: 10, 
         paddingVertical: 5, 
-        borderRadius: 5, 
+        borderRadius: 15,
         alignSelf: "flex-start",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        maxWidth: '80%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 2
     } as ViewStyle,
     mensajeserver: {
         marginVertical: 5,
         fontSize: 16, 
         color: "white", 
-        backgroundColor: "black",
+        backgroundColor: "#9E9E9E",
         paddingHorizontal: 10, 
         paddingVertical: 5,
-        borderRadius: 5, 
+        borderRadius: 15,
         alignSelf: "center",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        maxWidth: '80%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 2
     } as ViewStyle
 });
